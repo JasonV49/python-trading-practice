@@ -1,0 +1,21 @@
+services:
+  - type: cron
+    name: python-trading-practice
+    runtime: python
+    plan: 0.5c-512mb
+    schedule: "0,30 12,13 * * 2"
+    buildCommand: python -m pip install -r requirements.txt && python -m unittest -q
+    startCommand: python job.py
+    envVars:
+      - key: DATABASE_URL
+        sync: false
+      - key: OPENAI_API_KEY
+        sync: false
+      - key: OPENAI_MODEL
+        sync: false
+      - key: RESEND_API_KEY
+        sync: false
+      - key: LESSON_FROM
+        sync: false
+      - key: LESSON_TO
+        sync: false
