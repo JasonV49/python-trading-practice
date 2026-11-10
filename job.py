@@ -137,8 +137,9 @@ def main():
         return teach(unit, previous, os.environ["OPENAI_API_KEY"], os.environ["OPENAI_MODEL"])
 
     def deliver(payload, key):
+        headers = {"Idempotency-Key": key, "User-Agent": "Python-Trading-Practice/1.0"}
         result = post_json("https://api.resend.com/emails", os.environ["RESEND_API_KEY"],
-                           payload, {"Idempotency-Key": key})
+                           payload, headers)
         return result.get("id")
 
     with psycopg.connect(os.environ["DATABASE_URL"], connect_timeout=10) as connection:
